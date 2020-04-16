@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <!--List<Classes> findAllClasses();-->
+
+    <!--void addOneClasses(Classes classes);-->
+
+    <!--void updateOneClasses(Classes classes);-->
+
+    <!--void deleteOneClasses(String classesNum);-->
+
+    <!--Classes getOneClasses(String classesNum);-->
+
+<mapper namespace="com.wqz.alumniBook.dao.ClassesDao">
+
+    <resultMap id="BaseResultMap" type="com.wqz.alumniBook.bean.Classes">
+        <result column="classes_id" property="classesId"/>
+        <result column="classes_num" property="classesNum"/>
+        <result column="classes_name" property="classesName"/>
+        <result column="header_URI" property="headerURI"/>
+        <result column="monitor_id" property="monitorId"/>
+    </resultMap>
+    <select id="findAllClasses" resultMap="BaseResultMap">
+        SELECT * FROM classes
+    </select>
+
+    <select id="getOneClasses" resultMap="BaseResultMap">
+        SELECT * FROM classes where classes_num=#{classesNum}
+    </select>
+
+    <insert id="addOneClasses" parameterType="com.wqz.alumniBook.bean.Classes">
+        INSERT INTO classes (classes_id,classes_name,classes_num,monitor_id,header_URI) VALUES(null,#{classesName},#{classesNum},#{monitorId},#{headerURI})
+    </insert>
+
+    <update id="updateOneClasses" parameterType="com.wqz.alumniBook.bean.Classes">
+        UPDATE classes set classes_name=#{classesName},monitor_id=#{monitorId},header_URI=#{headerURI} where classes_num=#{classesNum}
+    </update>
+
+    <delete id="deleteOneClasses" >
+        DELETE FROM classes where classes_num=#{classesNum}
+    </delete>
+
+<!--根据班级编号查找学生列表-->
+    <select id="getStudentsByClassesNum" resultType="com.wqz.alumniBook.bean.Student">
+        SELECT * FROM student where classes_num=#{classesNum} ORDER BY sid ASC
+    </select>
+
+
+</mapper>

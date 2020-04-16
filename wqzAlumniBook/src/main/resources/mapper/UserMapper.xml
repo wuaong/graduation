@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wqz.alumniBook.dao.UserDao">
+
+
+    <select id="getUserByUserName" resultType="com.wqz.alumniBook.bean.User">
+        SELECT * FROM user where username=#{username};
+    </select>
+
+    <delete id="deteleUserById">
+        DELETE from user where userId=#{userId}
+    </delete>
+
+    <update id="updateUser" parameterType="com.wqz.alumniBook.bean.User">
+        UPDATE user set password=#{password},phone=#{phone},email=#{email},
+        is_admin=#{isAdmin} where username=#{username}
+    </update>
+
+    <insert id="addUser" parameterType="com.wqz.alumniBook.bean.User">
+        INSERT user (username,password,phone,email) values(#{username},#{password},#{phone},#{email})
+    </insert>
+
+    <select id="findAllUser" resultType="com.wqz.alumniBook.bean.User">
+        SELECT * FROM user where username=#{username};
+    </select>
+
+
+</mapper>
+

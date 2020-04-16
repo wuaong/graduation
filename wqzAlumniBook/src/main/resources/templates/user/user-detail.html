@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/dashboard.css" rel="stylesheet">
+    <style type="text/css">
+        table{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<!--引入抽取的topbar-->
+<!--模板名：会使用thymeleaf的前后缀配置规则进行解析-->
+<div th:replace="commons/bar::topbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <div th:replace="commons/bar::#sidebar"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+            <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h2><a class="btn btn-sm btn-success"  th:href="@{/user/}+${user.getUsername()}">修改</a></h2>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm"  style="border: 1px papayawhip solid">
+                    <thead>
+                    <tr>
+                        <th scope="col">username</th>
+                        <th scope="col" th:text="${user.getUsername()}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">password</th>
+                        <th scope="col" th:text="${user.getPassword()}"></th>
+                    </tr>
+                    <tr>
+                        <th scope="row">管理员</th>
+                        <th scope="col" th:text="${user.getIsAdmin()}"></th>
+                    </tr>
+                    <tr>
+                        <th scope="row">phone</th>
+                        <th scope="col" th:text="${user.getPhone()}"></th>
+                    </tr>
+                    <tr>
+                        <th scope="row">email</th>
+                        <th scope="col" th:text="${user.getEmail()}"></th>
+                    </tr>
+                    <tr>
+                        <th scope="row">班级信息</th>
+                        <th scope="col">
+                            <a th:href="@{/classes-detail/}+${student.getClassesNum()}" target="_blank">
+                                [[${student.getClassesNum()}]]
+                            </a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="row">个人信息</th>
+                        <th scope="col">
+                            <a  th:href="@{/student-detail/}+${student.getSid()}" target="_blank">
+                                信息详情
+                            </a>
+                        </th>
+                    </tr>
+
+                    <p>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">发送消息</a>
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">接收消息</button>
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">both</button>
+                    </p>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                <div class="card card-body">
+                                    <div>
+                                        <a class="btn btn-sm btn-success" th:href="@{/addNotice/}+${user.getUsername()}">增加</a>
+                                    </div>
+                                    <p th:each="sender:${noticeBysender}">
+                                        接收人：<a th:href="@{/student-detail/}+${sender.getReceiver()}">[[${sender.getReceiver()}]]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        内容：<b>[[${sender.getContent()}]]</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i th:text="${#dates.format(sender.createTime, 'yyyy-MM-dd hh:mm:ss')}"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-sm btn-info deleteBtn" th:attr="del_uri=@{/delNotic/}+${sender.getNid()}">删除</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="collapse multi-collapse" id="multiCollapseExample2">
+                                <div class="card card-body">
+                                    <p th:each="receiver:${noticeByReceiver}">
+                                        发送人：<a th:href="@{/student-detail/}+${receiver.getSender()}">[[${receiver.getSender()}]]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        内容：<b>[[${receiver.getContent()}]]</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i th:text="${#dates.format(receiver.createTime, 'yyyy-MM-dd hh:mm:ss')}"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-sm btn-info deleteBtn" th:attr="del_uri=@{/delNotic/}+${receiver.getNid()}">删除</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <form id="deleteEmpForm"  method="post">
+            <input type="hidden" name="_method" value="delete"/>
+        </form>
+    </div>
+</div>
+
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/popper.min.js" ></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<!-- Icons -->
+<script type="text/javascript" src="/js/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+<script>
+    $(".deleteBtn").click(function(){
+        $("#deleteEmpForm").attr("action",$(this).attr("del_uri")).submit();
+        return false;
+    });
+</script>
+</body>
+
+</html>

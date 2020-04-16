@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/dashboard.css" rel="stylesheet">
+    <style type="text/css">
+        table{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<!--引入抽取的topbar-->
+<!--模板名：会使用thymeleaf的前后缀配置规则进行解析-->
+<div th:replace="commons/bar::topbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <div th:replace="commons/bar::#sidebar"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+
+            <form th:action="@{/user}" method="post">
+                <!--发送put请求修改员工数据-->
+                <!--
+                1、SpringMVC中配置HiddenHttpMethodFilter;（SpringBoot自动配置好的）
+                2、页面创建一个post表单
+                3、创建一个input项，name="_method";值就是我们指定的请求方式
+                -->
+                <input type="hidden" name="_method" value="put"/>
+
+                <div class="form-group">
+                    <label>username</label>
+                    <input name="username" type="text" class="form-control" th:value="${user.getUsername()}">
+                </div>
+
+                <div class="form-group">
+                    <label>password</label>
+                    <input name="password" type="text" class="form-control" th:value="${user.getPassword()}">
+                </div>
+
+                <div class="form-group">
+                    <label>管理员</label>
+                    <input name="isAdmin" type="text" class="form-control" th:value="${user.getIsAdmin()}">
+                </div>
+
+                <div class="form-group">
+                    <label>电话号码</label>
+                    <input name="phone" type="text" class="form-control" th:value="${user.getPhone()}">
+                </div>
+
+                <div class="form-group">
+                    <label>邮箱</label>
+                    <input name="email" type="email" class="form-control" th:value="${user.getEmail()}">
+                </div>
+
+                <button type="submit" class="btn btn-primary" >修改</button>
+                <a class="btn btn-primary" th:href="@{/user-detail}" >返回</a>
+            </form>
+        </main>
+    </div>
+</div>
+
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/popper.min.js" ></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<!-- Icons -->
+<script type="text/javascript" src="/js/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+
+</body>
+
+</html>

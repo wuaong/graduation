@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Dashboard Template for Bootstrap</title>
+		<!-- Bootstrap core CSS -->
+		<link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="/css/dashboard.css" rel="stylesheet">
+		<style type="text/css">
+			table{
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--引入抽取的topbar-->
+		<!--模板名：会使用thymeleaf的前后缀配置规则进行解析-->
+		<div th:replace="commons/bar::topbar"></div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<!--引入侧边栏-->
+				<div th:replace="commons/bar::#sidebar(activeUri='classes-manage')"></div>
+
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+					<!--需要区分是员工修改还是添加；-->
+					<form th:action="@{/admin/classes}" method="post">
+						<!--发送put请求修改员工数据-->
+						<!--
+                        1、SpringMVC中配置HiddenHttpMethodFilter;（SpringBoot自动配置好的）
+                        2、页面创建一个post表单
+                        3、创建一个input项，name="_method";值就是我们指定的请求方式
+                        -->
+						<input type="hidden" name="_method" value="put" th:if="${classes!=null}"/>
+
+						<!--<div class="form-group">
+                            <label>classesId</label>
+                            <input name="classesId" type="text" class="form-control"  th:value="${classes!=null}?${classes.getClassesId()}">
+                        </div>-->
+						<div class="form-group">
+							<label>班级号</label>
+							<input name="classesNum" type="text" class="form-control" th:value="${classes!=null}?${classes.getClassesNum()}">
+						</div>
+
+						<div class="form-group">
+							<label>班级名称</label>
+							<input name="classesName" type="text" class="form-control" th:value="${classes!=null}?${classes.getClassesName()}">
+						</div>
+
+						<div class="form-group">
+							<label>班级logo</label>
+							<input name="headerURI" type="text" class="form-control"  th:value="${classes!=null}?${classes.getHeaderURI()}">
+						</div>
+
+						<div class="form-group">
+							<label>班长学号</label>
+							<input name="monitorId" type="text" class="form-control"  th:value="${classes!=null}?${classes.getMonitorId()}">
+						</div>
+
+						<button type="submit" class="btn btn-primary" th:text="${classes!=null}?'修改':'添加'">添加</button>
+					</form>
+				</main>
+			</div>
+		</div>
+
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/popper.min.js" ></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+		<!-- Icons -->
+		<script type="text/javascript" src="/js/feather.min.js"></script>
+		<script>
+			feather.replace()
+		</script>
+
+	</body>
+
+</html>

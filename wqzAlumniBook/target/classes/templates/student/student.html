@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+	<link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/dashboard.css" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<body>
+<!--引入抽取的topbar-->
+<!--模板名：会使用thymeleaf的前后缀配置规则进行解析-->
+<div th:replace="commons/bar::topbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <div th:replace="commons/bar::#sidebar"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+            <form th:action="@{/update-info}" method="post">
+                <!--发送put请求修改员工数据-->
+                <!--
+                1、SpringMVC中配置HiddenHttpMethodFilter;（SpringBoot自动配置好的）
+                2、页面创建一个post表单
+                3、创建一个input项，name="_method";值就是我们指定的请求方式
+                -->
+                <input type="hidden" name="_method" value="put">
+                <!--<input type="hidden" name="sid" th:if="${student!=null}" th:value="${student.sid}">-->
+                <div class="form-group">
+                    <label>学号</label>
+                    <input name="sid" type="text" class="form-control" placeholder="2018140301"
+                           th:value="${student!=null}?${student.sid}">
+                </div>
+                <div class="form-group">
+                    <label>姓名</label>
+                    <input name="name" type="text" class="form-control" placeholder="姓名14031"
+                           th:value="${student!=null}?${student.name}">
+                </div>
+                <div class="form-group">
+                    <label>性别</label><br/>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="sex" value="男"
+                               th:checked="${student!=null}?${student.sex=='男'}">
+                        <label class="form-check-label">男</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="sex" value="女"
+                               th:checked="${student!=null}?${student.sex=='女'}">
+                        <label class="form-check-label">女</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>年龄</label>
+                    <input name="age" type="text" class="form-control" placeholder="20"
+                           th:value="${student!=null}?${student.age}">
+                </div>
+
+                <div class="form-group">
+                    <label>班级</label>
+                    <!--提交的是班级的id-->
+                    <select class="form-control" name="classesNum">
+                        <option th:selected="${student!=null}?${classes.classesNum == student.classesNum}"
+                                th:value="${classes.classesNum}" th:each="classes:${classess}"
+                                th:text="${classes.classesNum}">1
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>爱好</label>
+                    <input name="hobby" type="text" class="form-control"
+                           th:value="${student!=null}?${student.hobby}">
+                </div>
+
+                <div class="form-group">
+                    <label>地址</label>
+                    <input name="address" type="text" class="form-control"
+                           th:value="${student!=null}?${student.address}">
+                </div>
+
+                <div class="form-group">
+                    <label>最喜欢的人</label>
+                    <input name="favoritePeople" type="text" class="form-control"
+                           th:value="${student!=null}?${student.favoritePeople}">
+                </div>
+
+                <div class="form-group">
+                    <label>最喜欢的食物</label>
+                    <input name="favoriteFood" type="text" class="form-control"
+                           th:value="${student!=null}?${student.favoriteFood}">
+                </div>
+
+                <div class="form-group">
+                    <label>最喜欢的水果</label>
+                    <input name="favoriteFruit" type="text" class="form-control"
+                           th:value="${student!=null}?${student.favoriteFruit}">
+                </div>
+
+                <div class="form-group">
+                    <label>最喜欢的一句话</label>
+                    <input name="favoriteWords" type="text" class="form-control"
+                           th:value="${student!=null}?${student.favoriteWords}">
+                </div>
+
+                <div class="form-group">
+                    <label>qq</label>
+                    <input name="qq" type="text" class="form-control"
+                           th:value="${student!=null}?${student.qq}">
+                </div>
+
+                <div class="form-group">
+                    <label>电话</label>
+                    <input name="tel" type="text" class="form-control"
+                           th:value="${student!=null}?${student.tel}">
+                </div>
+
+                <div class="form-group">
+                    <label>邮箱</label>
+                    <input name="email" type="email" class="form-control"
+                           th:value="${student!=null}?${student.email}">
+                </div>
+
+                <div class="form-group">
+                    <label>headerURI</label>
+                    <input name="headerURI" type="text" class="form-control"
+                           th:value="${student!=null}?${student.headerURI}">
+                </div>
+                <button type="submit" class="btn btn-primary" th:text="${student!=null}?'修改':'添加'">添加</button>
+                <a class="btn btn-success" th:href="@{/student-detail/}+${student.sid}">返回</a>
+            </form>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/popper.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="/js/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+
+</body>
+
+</html>

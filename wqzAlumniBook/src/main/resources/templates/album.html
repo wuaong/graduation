@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>相册</title>
+    <meta name="viewport"
+          content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;"/>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/dashboard.css" >
+    <style type="text/css">
+       img{
+           width:auto;
+           height: 456px;
+       }
+    </style>
+</head>
+
+
+<body>
+<!--引入topbar-->
+    <div th:replace="commons/bar::topbar"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <!--引入sidebar-->
+            <div th:replace="commons/bar::#sidebar(activeUri='album.html')"></div>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                    <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                        <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                    </div>
+                    <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                        <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">图片</h1>
+                </div>
+
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active text-center">
+                            <img src="/img/schoolbadge1.png" class="d-block rounded mx-auto d-block " >
+                        </div>
+                        <div class="carousel-item text-center">
+                            <img src="/img/schoolbadge2.png" class="d-block rounded mx-auto d-block" >
+                        </div>
+                        <div class="carousel-item text-center" >
+                            <img src="/img/schoolbadge8.png"class="d-block  rounded mx-auto d-block ">
+                        </div>
+                        <div class="carousel-item text-center" >
+                            <img src="/img/schoolbadge4.png"class="d-block  rounded mx-auto d-block ">
+                        </div>
+                        <div class="carousel-item text-center" >
+                            <img src="/img/schoolbadge5.png"class="d-block  rounded mx-auto d-block ">
+                        </div>
+                        <div class="carousel-item text-center" >
+                            <img src="/img/schoolbadge6.png"class="d-block  rounded mx-auto d-block ">
+                        </div>
+                        <div class="carousel-item text-center" >
+                            <img src="/img/schoolbadge7.png"class="d-block  rounded mx-auto d-block ">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                       <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+                        <span style="font-size: 40px;color: black"> < </span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                       <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+                        <span style="font-size: 40px;color: black"> > </span>
+                    </a>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+        <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/popper.min.js" ></script>
+        <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+        <!-- Icons -->
+        <script type="text/javascript" src="/js/feather.min.js"></script>
+        <script>
+            feather.replace()
+        </script>
+
+    </body>
+
+</html>
+
