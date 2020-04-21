@@ -157,10 +157,29 @@ public class UserController {
         indexMV.addObject("admin",userMap.get(RedisKey.IS_ADMIN));
 
         /*留言*/
+
+
         List<MessageBoard> noticeBysender = noticeService.getNoticeBySender(user.getUsername());
         List<MessageBoard> noticeByReceiver = noticeService.getNoticeByReceiver(user.getUsername());
         indexMV.addObject("noticeBysender",noticeBysender);
         indexMV.addObject("noticeByReceiver",noticeByReceiver);
+
+
+
+        Map<MessageBoard,Student> map1 = new HashMap<>();
+        for (MessageBoard notice:noticeBysender){
+            Student studentBySID = studentService.getStudentBySID(notice.getReceiver());
+            map1.put(notice,studentBySID);
+        }
+        indexMV.addObject("map1",map1);
+
+        Map<MessageBoard,Student> map2 = new HashMap<>();
+        for (MessageBoard notice:noticeByReceiver){
+            Student studentBySID = studentService.getStudentBySID(notice.getSender());
+            map2.put(notice,studentBySID);
+        }
+        indexMV.addObject("map2",map2);
+
 
         return indexMV;
     }

@@ -6,6 +6,7 @@ import com.wqz.alumniBook.dao.StudentDao;
 import com.wqz.alumniBook.dto.StudentPosition;
 import com.wqz.alumniBook.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

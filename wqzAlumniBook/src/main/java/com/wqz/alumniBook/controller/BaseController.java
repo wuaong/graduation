@@ -2,8 +2,10 @@ package com.wqz.alumniBook.controller;
 
 
 import com.wqz.alumniBook.bean.MessageBoard;
+import com.wqz.alumniBook.bean.Student;
 import com.wqz.alumniBook.config.RedisKey;
 import com.wqz.alumniBook.service.NoticeService;
+import com.wqz.alumniBook.service.StudentService;
 import com.wqz.alumniBook.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +23,9 @@ public class BaseController {
 
     @Autowired
     private NoticeService noticeService;
+
+    @Autowired
+    private StudentService studentService;
 
     @Autowired
     private RedisTemplate<String, Map<String, String>> hashStringRedis;
@@ -82,8 +89,33 @@ public class BaseController {
 
         ModelAndView modelAndView = new ModelAndView("notice");
         modelAndView.addObject("notices",notices);
+
+
+
+
+        List<Student> students = new ArrayList<>();
+        for (MessageBoard notice:notices){
+            Student studentBySID = studentService.getStudentBySID(notice.getSender());
+            students.add(studentBySID);
+        }
+        modelAndView.addObject("students",students);
+
+       /*
+        Map<MessageBoard,Student> map = new HashMap<>();
+        List<Map<MessageBoard,Student>> resultList = new ArrayList<>();
+        modelAndView.addObject("resultList",resultList);
+        for (Map<MessageBoard,Student>map1:resultList){
+            for (MessageBoard m:map1.keySet() ){
+                System.out.println(m+"："+map1.get(m));
+            }
+        }
+        System.out.println(resultList);*/
+
+
         Map<String, String> userMap = hashStringRedis.opsForValue().get(CookieUtil.getCookie(request, "token"));
         modelAndView.addObject("admin",userMap.get(RedisKey.IS_ADMIN));
+
+
       /*  System.out.printf(userMap.get(RedisKey.USER_NAME));
         System.out.println(userMap.get(RedisKey.IS_ADMIN));*/
         return modelAndView;
