@@ -99,12 +99,12 @@
                                         <a class="btn btn-sm btn-success" th:href="@{/addNotice/}+${user.getUsername()}">增加</a>
                                     </div>
 
-                                    <p th:each="map1:${map1}">
-                                        接收人：<a th:href="@{/student-detail/}+${map1.key.getReceiver()}">[[${map1.value.name}]]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a th:text="${map1.value.getClassesNum()}" th:href="@{/classes-detail/}+${map1.value.getClassesNum()}"></a>
-                                        内容：<b>[[${map1.key.content}]]</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i th:text="${#dates.format(map1.key.createTime, 'yyyy-MM-dd hh:mm:ss')}"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-sm btn-info deleteBtn" th:attr="del_uri=@{/delNotic/}+${map1.key.nid}">删除</button>
+                                    <p th:each="map11:${map1}">
+                                        接收人：<a th:href="@{/student-detail/}+${map1.key.getReceiver()}">[[${map11.value.name}]]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a th:text="${map11.value.getClassesNum()}" th:href="@{/classes-detail/}+${map11.value.getClassesNum()}"></a>
+                                        内容：<b>[[${map11.key.content}]]</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i th:text="${#dates.format(map11.key.createTime, 'yyyy-MM-dd hh:mm:ss')}"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-sm btn-info deleteBtn" th:attr="del_uri=@{/delNotic/}+${map11.key.nid}">删除</button>
                                     </p>
                                 </div>
                             </div>
@@ -115,12 +115,12 @@
                                 <div class="card card-body">
 
 
-                                    <p th:each="map2:${map2}">
-                                        发送人：<a th:href="@{/student-detail/}+${map2.key.sender}">[[${map2.value.name}]]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a th:text="${map2.value.getClassesNum()}" th:href="@{/classes-detail/}+${map2.value.getClassesNum()}"></a>
-                                        内容：<b>[[${map2.key.content}]]</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i th:text="${#dates.format(map2.key.createTime, 'yyyy-MM-dd hh:mm:ss')}"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-sm btn-info deleteBtn" th:attr="del_uri=@{/delNotic/}+${map2.key.nid}">删除</button>
+                                    <p th:each="map22:${map2}">
+                                        发送人：<a th:href="@{/student-detail/}+${map22.key.sender}">[[${map22.value.name}]]</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a th:text="${map22.value.getClassesNum()}" th:href="@{/classes-detail/}+${map22.value.getClassesNum()}"></a>
+                                        内容：<b>[[${map22.key.content}]]</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i th:text="${#dates.format(map22.key.createTime, 'yyyy-MM-dd hh:mm:ss')}"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-sm btn-info deleteBtn" th:attr="del_uri=@{/delNotic/}+${map22.key.nid}">删除</button>
                                     </p>
 
                                 </div>

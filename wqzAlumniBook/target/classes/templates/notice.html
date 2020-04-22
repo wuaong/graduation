@@ -58,43 +58,32 @@
                         <th>content</th>
                     </tr>
                     </thead>
-                    <tbody th:each="student:${students}">
-
-                    <tr th:each="notice:${notices}">
-
+                    <tbody>
+                    <tr th:each="map2:${map1}">
 
                         <td>
-                            <a th:href="@{/student-detail/}+${notice.getSender()}">[[${student.name}]]</a>
-                            <a th:text="${student.getClassesNum()}" th:href="@{/classes-detail/}+${student.getClassesNum()}"></a>
+                            <a th:href="@{/student-detail/}+${map2.key.getSender()}">[[${map2.value[0].getName()}]]</a>
+
+                            <a th:text="${map2.value[0].getClassesNum()}" th:href="@{/classes-detail/}+${map2.value[0].getClassesNum()}"></a>
                         </td>
 
                         <td>
-                            <a th:href="@{/student-detail/}+${notice.getReceiver()}">[[${student.name}]]</a>
-                            <a th:text="${student.getClassesNum()}" th:href="@{/classes-detail/}+${student.getClassesNum()}"></a>
+                            <a th:href="@{/student-detail/}+${map2.key.getReceiver()}">[[${map2.value[1].name}]]</a>
+                            <a th:text="${map2.value[1].getClassesNum()}" th:href="@{/classes-detail/}+${map2.value[1].getClassesNum()}"></a>
                         </td>
-                        <td th:text="${#dates.format(notice.createTime, 'yyyy-MM-dd hh:mm:ss')}"></td>
+                        <td th:text="${#dates.format(map2.key.createTime, 'yyyy-MM-dd hh:mm:ss')}"></td>
 
                         <td>
-                            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right" th:title="${notice.getContent()}">
+                            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right" th:title="${map2.key.content}">
                                 message
                             </button>
                         </td>
 
 
-                        <!--
-                         <td>
-                             <div class="dropdown">
-                                 <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                     留言
-                                 </button>
-                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                     <p class="dropdown-item">[[${notice.getContent()}]]</p>
-                                 </div>
-                             </div>
-                         </td>-->
+
 
                         <td th:if="${admin}=='1'">
-                            <button class="btn btn-sm btn-primary deleteBtn" th:attr="del_uri=@{/admin/delNotic/}+${notice.getNid()}">删除</button>
+                            <button class="btn btn-sm btn-primary deleteBtn" th:attr="del_uri=@{/admin/delNotic/}+${map2.key.getNid()}">删除</button>
                         </td>
                     </tr>
                     </tbody>

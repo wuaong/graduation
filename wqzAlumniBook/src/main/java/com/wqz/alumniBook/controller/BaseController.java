@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,36 +85,20 @@ public class BaseController {
     public ModelAndView notice(HttpServletRequest request){
 
         List<MessageBoard> notices=noticeService.getAllNotice();
-
         ModelAndView modelAndView = new ModelAndView("notice");
         modelAndView.addObject("notices",notices);
 
-
-
-
-        List<Student> students = new ArrayList<>();
+        Map<MessageBoard, Student[]> map1 = new HashMap<>();
         for (MessageBoard notice:notices){
-            Student studentBySID = studentService.getStudentBySID(notice.getSender());
-            students.add(studentBySID);
+            Student sender= studentService.getStudentBySID(notice.getSender());
+            Student receiver = studentService.getStudentBySID(notice.getReceiver());
+            Student[] studentSR = {sender,receiver};
+            map1.put(notice,studentSR);
         }
-        modelAndView.addObject("students",students);
-
-       /*
-        Map<MessageBoard,Student> map = new HashMap<>();
-        List<Map<MessageBoard,Student>> resultList = new ArrayList<>();
-        modelAndView.addObject("resultList",resultList);
-        for (Map<MessageBoard,Student>map1:resultList){
-            for (MessageBoard m:map1.keySet() ){
-                System.out.println(m+"："+map1.get(m));
-            }
-        }
-        System.out.println(resultList);*/
-
+        modelAndView.addObject("map1",map1);
 
         Map<String, String> userMap = hashStringRedis.opsForValue().get(CookieUtil.getCookie(request, "token"));
         modelAndView.addObject("admin",userMap.get(RedisKey.IS_ADMIN));
-
-
       /*  System.out.printf(userMap.get(RedisKey.USER_NAME));
         System.out.println(userMap.get(RedisKey.IS_ADMIN));*/
         return modelAndView;

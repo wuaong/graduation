@@ -84,8 +84,6 @@ public class UserController {
 
     /**
      * 注册用户请求
-     * @param username
-     * @param password
      */
     @PostMapping("register-user")
     @ResponseBody
